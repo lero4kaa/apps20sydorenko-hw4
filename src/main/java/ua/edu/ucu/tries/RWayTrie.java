@@ -22,8 +22,13 @@ public class RWayTrie implements Trie {
 
     private Node put(Node x, String key, int val, int d)
     {
-        if (x == null) x = new Node();
-        if (d == key.length()) { x.val = val; return x; }
+        if (x == null) {
+            x = new Node();
+        }
+        if (d == key.length()) {
+            x.val = val;
+            return x;
+        }
         char c = key.charAt(d); // Use dth key char to identify subtrie.
         x.next[c - asciiFirstLetter] = put(x.next[c - asciiFirstLetter], key,
                                            val, d+1);
@@ -42,14 +47,20 @@ public class RWayTrie implements Trie {
     public Object get(String key)
     {
         Node x = get(root, key, 0);
-        if (x == null) return null;
+        if (x == null) {
+            return null;
+        }
         return x.val;
     }
 
     private Node get(Node x, String key, int d)
     { // Return node associated with key in the subtrie rooted at x.
-        if (x == null) return null;
-        if (d == key.length()) return x;
+        if (x == null) {
+            return null;
+        }
+        if (d == key.length()) {
+            return x;
+        }
         char c = key.charAt(d); // Use dth key char to identify subtrie.
         return get(x.next[c - asciiFirstLetter], key, d+1);
     }
@@ -65,17 +76,24 @@ public class RWayTrie implements Trie {
 
     private Node delete(Node x, String key, int d)
     {
-        if (x == null) return null;
+        if (x == null) {
+            return null;
+        }
         if (d == key.length())
             x.val = null;
         else
         {
             char c = key.charAt(d);
-            x.next[c - asciiFirstLetter] = delete(x.next[c - asciiFirstLetter], key, d+1);
+            x.next[c - asciiFirstLetter] =
+                    delete(x.next[c - asciiFirstLetter], key, d+1);
         }
-        if (x.val != null) return x;
+        if (x.val != null) {
+            return x;
+        }
         for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
-            if (x.next[c-asciiFirstLetter] != null) return x;
+            if (x.next[c-asciiFirstLetter] != null) {
+                return x;
+            }
         return null;
     }
 
@@ -86,16 +104,24 @@ public class RWayTrie implements Trie {
 
     private void collect(Node x, String pre, Queue q)
     {
-        if (x == null) return;
-        if (x.val != null) q.enqueue(pre);
+        if (x == null) {
+            return;
+        }
+        if (x.val != null) {
+            q.enqueue(pre);
+        }
         for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
             collect(x.next[c-asciiFirstLetter], pre + c, q);
     }
 
     private void collect(Node x, String pre, Queue q, int k)
     {
-        if (x == null) return;
-        if ((x.val != null) & ((int) x.val <= k)) q.enqueue(pre);
+        if (x == null) {
+            return;
+        }
+        if ((x.val != null) && ((int) x.val <= k)) {
+            q.enqueue(pre);
+        }
         for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
             collect(x.next[c-asciiFirstLetter], pre + c, q, k);
     }
