@@ -13,4 +13,6 @@ public interface Trie {
     public Iterable<String> wordsWithPrefix(String pref);
     
     public int size();
+
+    Iterable<String> wordsWithPrefixK(String pref, int k);
 }
