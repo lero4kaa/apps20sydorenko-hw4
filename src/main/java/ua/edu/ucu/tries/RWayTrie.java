@@ -17,7 +17,7 @@ public class RWayTrie implements Trie {
     @Override
     public void add(Tuple t) {
         root = put(root, t.term, t.weight, 0);
-        size ++;
+        size++;
     }
 
     private Node put(Node x, String key, int val, int d)
@@ -40,7 +40,6 @@ public class RWayTrie implements Trie {
         if (word == null) {
             throw new IllegalArgumentException("Null value");
         }
-
         return get(word) != null;
     }
 
@@ -67,7 +66,7 @@ public class RWayTrie implements Trie {
 
     @Override
     public boolean delete(String word) {
-        if (contains(word)){
+        if (contains(word)) {
             root = delete(root, word, 0);
             return true;
         }
@@ -79,8 +78,9 @@ public class RWayTrie implements Trie {
         if (x == null) {
             return null;
         }
-        if (d == key.length())
+        if (d == key.length()) {
             x.val = null;
+        }
         else
         {
             char c = key.charAt(d);
@@ -90,10 +90,11 @@ public class RWayTrie implements Trie {
         if (x.val != null) {
             return x;
         }
-        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
-            if (x.next[c-asciiFirstLetter] != null) {
+        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++) {
+            if (x.next[c - asciiFirstLetter] != null) {
                 return x;
             }
+        }
         return null;
     }
 
@@ -110,8 +111,9 @@ public class RWayTrie implements Trie {
         if (x.val != null) {
             q.enqueue(pre);
         }
-        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
+        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++) {
             collect(x.next[c-asciiFirstLetter], pre + c, q);
+        }
     }
 
     private void collect(Node x, String pre, Queue q, int k)
@@ -122,8 +124,9 @@ public class RWayTrie implements Trie {
         if ((x.val != null) && ((int) x.val <= k)) {
             q.enqueue(pre);
         }
-        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++)
+        for (char c = asciiFirstLetter; c < R+asciiFirstLetter; c++) {
             collect(x.next[c-asciiFirstLetter], pre + c, q, k);
+        }
     }
 
     @Override

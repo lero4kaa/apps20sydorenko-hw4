@@ -34,7 +34,7 @@ public class Queue {
         return generalQueue.size();
     }
 
-    public <T> Iterator <T> iterator() {
+    public <T> Iterator<T> iterator() {
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {
